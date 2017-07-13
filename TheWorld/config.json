@@ -4,6 +4,6 @@
   },
   "ConnectionStrings": {
     "WorldContextConnection":
-      "Source=(localdb)\\MSSQLLocalDB;InitialCatalog=TheWorldDb;Trusted_Connection=true;MultipleActiveResultSets=true;"
+      "Server=(localdb)\\MSSQLLocalDB;Database=TheWorldDb;Trusted_Connection=true;MultipleActiveResultSets=true;"
   }
 }
