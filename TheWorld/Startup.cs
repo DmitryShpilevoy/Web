@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -47,18 +48,26 @@ namespace TheWorld
 
             services.AddTransient<WorldContextSeedData>();
 
+            services.AddLogging();
+
             services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory,
-                                WorldContextSeedData seeder)
+                                WorldContextSeedData seeder, ILoggerFactory factory)
         {
             loggerFactory.AddConsole();
 
             if (env.IsDevelopment())
             {
+                TelemetryConfiguration.Active.DisableTelemetry = true;
                 app.UseDeveloperExceptionPage();
+                factory.AddDebug(LogLevel.Information);
+            }
+            else
+            {
+                factory.AddDebug(LogLevel.Error);
             }
 
             app.UseStaticFiles();
